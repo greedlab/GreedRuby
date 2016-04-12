@@ -11,6 +11,7 @@ opts = GetoptLong.new(
     ['--ignore', '-i', GetoptLong::OPTIONAL_ARGUMENT],
     ['--suffix', '-s', GetoptLong::OPTIONAL_ARGUMENT],
     ['--style', '-S', GetoptLong::OPTIONAL_ARGUMENT],
+    ['--autotitle', '-a', GetoptLong::NO_ARGUMENT],
     ['--help', '-h', GetoptLong::NO_ARGUMENT],
     ['--version', '-v', GetoptLong::NO_ARGUMENT]
 )
@@ -20,6 +21,7 @@ $output = './SUMMARY.md'
 $directory = './'
 $ignore = ['resource', 'Resource']
 $suffix = ['.md', '.markdown']
+$autotitle = false
 $style = 'github'
 
 $readme = "readme"
@@ -64,6 +66,9 @@ summary.rb [OPTION]
 -S, --style [string]:
    output style ,could be 'github' or 'gitbook', default 'github'
 
+-a, --autotitle:
+   auto set title through file content
+
 -h, --help:
    show help
 
@@ -76,6 +81,8 @@ summary.rb [OPTION]
 summary.rb 0.0.1
       EOF
       exit 0
+    when '--autotitle'
+      $autotitle = true
   end
 end
 
@@ -131,16 +138,17 @@ def summary_one_directory(summary, base, directory, ignore, deep)
         next
       end
 
+      string = "    " * deep
       if $style == "gitbook"
         readme = get_readme(fullPath)
         if readme
           # puts("debug" + readme)
-          string = " " * deep + "* [" + file + "](" + readme + ")"
+          string = string + "* [" + file + "](" + readme + ")"
         else
-          string = " " * deep + "* " + file
+          string = string + "* " + file
         end
       else
-        string = " " * deep + "* [" + file + "](" + fullPath + ")"
+        string = string + "* [" + file + "](" + fullPath + ")"
       end
 
       summary.syswrite(string + "\n")
@@ -164,7 +172,10 @@ def summary_one_directory(summary, base, directory, ignore, deep)
           next
         end
 
-        title = get_title(fullPath)
+        if $autotitle
+          title = get_title(fullPath)
+        end
+
         if !title || title.length == 0
           title = name
         end
@@ -178,7 +189,7 @@ def summary_one_directory(summary, base, directory, ignore, deep)
         end
         relativePath = fullPath[baseLength, fullPath.length - baseLength]
 
-        string = " " * deep + "* [" + title + "](" + URI::encode(relativePath) + ")"
+        string = "    " * deep + "* [" + title + "](" + URI::encode(relativePath) + ")"
         # puts string
         summary.syswrite(string + "\n")
       end
@@ -198,7 +209,7 @@ unless File.directory? $directory
   exit
 end
 
-summary_file.syswrite("#" + $title + "\n")
+summary_file.syswrite("# " + $title + "\n\n")
 
 summary_one_directory(summary_file, $directory, $directory, $ignore, 0)
 

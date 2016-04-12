@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="edc51216-2d66-4490-9ea8-6828a259a7b0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pbxprojConfig.rb" afterPath="$PROJECT_DIR$/pbxprojConfig.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/summary/README.md" afterPath="$PROJECT_DIR$/summary/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/summary/SUMMARY.md" afterPath="$PROJECT_DIR$/summary/SUMMARY.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/summary/summary.rb" afterPath="$PROJECT_DIR$/summary/summary.rb" />
     </list>
     <ignored path="GreedRuby.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -17,7 +18,7 @@
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/GreedRuby@summary.coverage" NAME="summary Coverage Results" MODIFIED="1460442823778" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/summary" MODULE_NAME="GreedRuby" />
+    <SUITE FILE_PATH="coverage/GreedRuby@summary.coverage" NAME="summary Coverage Results" MODIFIED="1460445162838" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/summary" MODULE_NAME="GreedRuby" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -31,8 +32,8 @@
       <file leaf-file-name="summary.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/summary/summary.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1894">
-              <caret line="49" column="26" selection-start-line="49" selection-start-column="26" selection-end-line="49" selection-end-column="26" />
+            <state relative-caret-position="791">
+              <caret line="188" column="11" selection-start-line="188" selection-start-column="11" selection-end-line="188" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -264,12 +265,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1460367648950</updated>
-      <workItem from="1460367656794" duration="16290000" />
+      <workItem from="1460367656794" duration="17746000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16290000" />
+    <option name="totallyTimeSpent" value="17746000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="74" y="66" width="1400" height="942" extended-state="0" />
@@ -320,8 +321,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/summary/summary.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1894">
-          <caret line="49" column="26" selection-start-line="49" selection-start-column="26" selection-end-line="49" selection-end-column="26" />
+        <state relative-caret-position="791">
+          <caret line="188" column="11" selection-start-line="188" selection-start-column="11" selection-end-line="188" selection-end-column="11" />
           <folding />
         </state>
       </provider>
