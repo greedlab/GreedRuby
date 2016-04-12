@@ -3,7 +3,7 @@
 require 'json'
 
 if ARGV.size != 3
-  puts "USAGE: projectConfig.rb <project.pbxproj> <ORGANIZATIONNAME> <CLASSPREFIX>"
+  puts "USAGE: pbxprojConfig.rb <project.pbxproj> <ORGANIZATIONNAME> <CLASSPREFIX>"
   return
 end
 
