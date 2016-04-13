@@ -11,6 +11,7 @@ opts = GetoptLong.new(
     ['--ignore', '-i', GetoptLong::OPTIONAL_ARGUMENT],
     ['--suffix', '-s', GetoptLong::OPTIONAL_ARGUMENT],
     ['--style', '-S', GetoptLong::OPTIONAL_ARGUMENT],
+    ['--encode', '-e', GetoptLong::NO_ARGUMENT],
     ['--autotitle', '-a', GetoptLong::NO_ARGUMENT],
     ['--help', '-h', GetoptLong::NO_ARGUMENT],
     ['--version', '-v', GetoptLong::NO_ARGUMENT]
@@ -21,6 +22,7 @@ $output = './SUMMARY.md'
 $directory = './'
 $ignore = ['resource', 'Resource']
 $suffix = ['.md', '.markdown']
+$encode = false
 $autotitle = false
 $style = 'github'
 
@@ -29,11 +31,7 @@ $readme = "readme"
 opts.each do |opt, arg|
   case opt
     when '--title'
-      if arg == ''
-        $title = 'My Blog'
-      else
-        $title = arg
-      end
+      $title = arg
     when '--directory'
       $directory = arg
     when '--output'
@@ -44,6 +42,10 @@ opts.each do |opt, arg|
       $suffix = arg
     when '--style'
       $style = arg
+    when '--autotitle'
+      $autotitle = true
+    when '--encode'
+      $encode = true
     when '--help'
       puts <<-EOF
 summary.rb [OPTION]
@@ -69,6 +71,9 @@ summary.rb [OPTION]
 -a, --autotitle:
    auto set title through file content
 
+-e, --encode:
+   url encode
+
 -h, --help:
    show help
 
@@ -81,8 +86,6 @@ summary.rb [OPTION]
 summary.rb 0.0.1
       EOF
       exit 0
-    when '--autotitle'
-      $autotitle = true
   end
 end
 
@@ -132,6 +135,13 @@ def summary_one_directory(summary, base, directory, ignore, deep)
     end
 
     fullPath = directory + "/" + file
+
+    baseLength = base.length
+    if base[baseLength - 1, 1] != "/"
+      baseLength += 1
+    end
+    relativePath = fullPath[baseLength, fullPath.length - baseLength]
+
     # puts fullPath
     if File.directory?(fullPath) # directory
       if ignore.include?(file)
@@ -142,13 +152,20 @@ def summary_one_directory(summary, base, directory, ignore, deep)
       if $style == "gitbook"
         readme = get_readme(fullPath)
         if readme
-          # puts("debug" + readme)
-          string = string + "* [" + file + "](" + readme + ")"
+          relativePath = relativePath + "/" + readme
         else
-          string = string + "* " + file
+          relativePath = nil
         end
+      end
+
+      if relativePath
+        if $encode
+          relativePath = URI::encode(relativePath)
+        end
+        # puts("debug" + readme)
+        string = string + "* [" + file + "](" + relativePath + ")"
       else
-        string = string + "* [" + file + "](" + fullPath + ")"
+        string = string + "* " + file
       end
 
       summary.syswrite(string + "\n")
@@ -188,8 +205,10 @@ def summary_one_directory(summary, base, directory, ignore, deep)
           baseLength += 1
         end
         relativePath = fullPath[baseLength, fullPath.length - baseLength]
-
-        string = "    " * deep + "* [" + title + "](" + URI::encode(relativePath) + ")"
+        if $encode
+          relativePath = URI::encode(relativePath)
+        end
+        string = "    " * deep + "* [" + title + "](" + relativePath + ")"
         # puts string
         summary.syswrite(string + "\n")
       end
@@ -209,7 +228,9 @@ unless File.directory? $directory
   exit
 end
 
-summary_file.syswrite("# " + $title + "\n\n")
+if $title != ""
+  summary_file.syswrite("# " + $title + "\n\n")
+end
 
 summary_one_directory(summary_file, $directory, $directory, $ignore, 0)
 
