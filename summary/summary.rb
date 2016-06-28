@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/ruby -w
 #Auth: bell@greedlab.com
 
 require 'open-uri'

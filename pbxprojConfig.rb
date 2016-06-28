@@ -1,10 +1,10 @@
-#!/usr/bin/ruby -w
+#!/usr/bin/env ruby
 
 require 'json'
 
 if ARGV.size != 3
   puts "USAGE: pbxprojConfig.rb <project.pbxproj> <ORGANIZATIONNAME> <CLASSPREFIX>"
-  return
+  exit 0
 end
 
 def deep_find_obj_with_key_value(data, desired_key, desired_value, hits = [])
@@ -43,7 +43,7 @@ deep_find_obj_with_key_value(hash,"isa","PBXProject",hits)
 size = hits.size
 if size != 2
   puts "can not find PBXProject"
-  return
+  exit
 end
 
 hash [hits[1]][hits[0]]["attributes"]["ORGANIZATIONNAME"]=ARGV[1]
@@ -52,7 +52,7 @@ hash [hits[1]][hits[0]]["attributes"]["CLASSPREFIX"]=ARGV[2]
 # puts hash
 aFile = File.new("project-modified.json", "w")
 if ! aFile
-return 0
+exit 0
 end
 
 aFile.write(hash.to_json)
